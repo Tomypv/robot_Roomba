@@ -6,12 +6,20 @@ import keyboard  # Librería para detectar las teclas presionadas
 def controlar_roomba(tecla):
     if tecla.name == 'up' or tecla.name == 'w':
         bot.drive_direct(100, 100)  # Avanzar
+        sensor = bot.get_sensors()
+        print(sensor)
     elif tecla.name == 'down' or tecla.name == 's':
         bot.drive_direct(-100, -100)  # Retroceder
+        sensor = bot.get_sensors()
+        print(sensor)
     elif tecla.name == 'left' or tecla.name == 'a':
         bot.drive_direct(-100, 100)  # Girar a la izquierda
+        sensor = bot.get_sensors()
+        print(sensor)
     elif tecla.name == 'right' or tecla.name == 'd':
         bot.drive_direct(100, -100)  # Girar a la derecha
+        sensor = bot.get_sensors()
+        print(sensor)
     else:
         bot.drive_stop()  # Detener el movimiento si no se presiona ninguna tecla de movimiento
 
@@ -27,4 +35,9 @@ keyboard.wait('esc')  # Esperar hasta que se presione la tecla 'Esc' para detene
 
 # Cerrar la conexión al finalizar
 bot.drive_stop()
+
+
+
+
+
 bot.close()
