@@ -1,0 +1,217 @@
+from pynput import keyboard as kb
+import math
+import pygame
+import random
+
+ANCHO = 5
+LARGO = 5
+EJE_RUEDAS = 35
+DIAM_RUEDAS = 10
+RESOL_ENCODER = 1000
+RELA_REDUCCION = 1
+CUARTO_CIRCUN = 1750/2
+
+pos_anterior_x = 350
+pos_anterior_y = 300
+giro_anterior = 0
+rastro=[]
+pygame.init()
+
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("ROOMBA")
+
+x, y = WIDTH // 2, HEIGHT // 2  
+angle = 0  
+line_length = 35  
+
+def calularConversion():
+    conversion = (2*math.pi * (DIAM_RUEDAS/2)) / (RELA_REDUCCION*RESOL_ENCODER)
+    
+    return conversion
+
+def pulsa(tecla):
+    global pos_anterior_x
+    global pos_anterior_y
+    global giro_anterior
+
+    if (tecla == kb.KeyCode.from_char('w')):
+        print('Pa alante: ' + str(tecla))
+        numero_aleatorio = random.randint(0, 10)
+        rueda_izq = conversion * CUARTO_CIRCUN
+        if (numero_aleatorio == 10):
+            rueda_izq = conversion * (CUARTO_CIRCUN-25)
+        rueda_der = conversion * CUARTO_CIRCUN
+        avance = (rueda_izq + rueda_der) / 2
+        print('El avance ha sido: ' + str(avance))
+        giro = ((rueda_der-rueda_izq)/EJE_RUEDAS)
+        print('giro es: ' + str(giro))
+        inc_x = avance * math.cos(giro_anterior+giro)
+        inc_y = avance * math.sin(giro_anterior+giro)
+        pos_anterior_x = inc_x + pos_anterior_x
+        pos_anterior_y = inc_y + pos_anterior_y
+        giro_anterior = giro + giro_anterior
+        if giro_anterior > 2*math.pi:
+            giro_anterior = 0
+        if giro_anterior <= (-2*math.pi):
+            giro_anterior = 0
+        print('X: ' + str(pos_anterior_x))
+        print('Y: ' + str(pos_anterior_y))
+        print('GIRO: ' + str(giro_anterior))
+
+    elif (tecla == kb.KeyCode.from_char('s')):
+        print('Pa atras: ' + str(tecla))
+        rueda_izq = conversion * (-CUARTO_CIRCUN)
+        rueda_der = conversion * (-CUARTO_CIRCUN)
+        avance = (rueda_izq + rueda_der) / 2
+        print('El avance ha sido: ' + str(avance))
+        giro = ((rueda_der-rueda_izq)/EJE_RUEDAS)
+        print('giro es: ' + str(giro))
+        inc_x = avance * math.cos(giro_anterior+giro)
+        inc_y = avance * math.sin(giro_anterior+giro)
+        pos_anterior_x = inc_x + pos_anterior_x
+        pos_anterior_y = inc_y + pos_anterior_y
+        giro_anterior = giro + giro_anterior
+        if giro_anterior > 2*math.pi:
+            giro_anterior = 0
+        if giro_anterior <= (-2*math.pi):
+            giro_anterior = 0
+        print('X: ' + str(pos_anterior_x))
+        print('Y: ' + str(pos_anterior_y))
+        print('GIRO: ' + str(giro_anterior))
+
+    elif (tecla == kb.KeyCode.from_char('d')):
+        print('Pa izquierda: ' + str(tecla))
+        rueda_izq = conversion * (-CUARTO_CIRCUN)
+        rueda_der = conversion * CUARTO_CIRCUN
+        avance = (rueda_izq + rueda_der) / 2
+        print('El avance ha sido: ' + str(avance))
+        giro = ((rueda_der-rueda_izq)/EJE_RUEDAS)
+        print('giro es: ' + str(giro))
+        inc_x = avance * math.cos(giro_anterior+giro)
+        inc_y = avance * math.sin(giro_anterior+giro)
+        pos_anterior_x = inc_x + pos_anterior_x
+        pos_anterior_y = inc_y + pos_anterior_y
+        giro_anterior = giro + giro_anterior
+        if giro_anterior > 2*math.pi:
+            giro_anterior = 0
+        if giro_anterior <= (-2*math.pi):
+            giro_anterior = 0
+        print('X: ' + str(pos_anterior_x))
+        print('Y: ' + str(pos_anterior_y))
+        print('GIRO: ' + str(giro_anterior))
+
+    elif (tecla == kb.KeyCode.from_char('a')):
+        print('Pa derecha: ' + str(tecla))
+        rueda_izq = conversion * CUARTO_CIRCUN
+        rueda_der = conversion * (-CUARTO_CIRCUN)
+        avance = (rueda_izq + rueda_der) / 2
+        print('El avance ha sido: ' + str(avance))
+        giro = ((rueda_der-rueda_izq)/EJE_RUEDAS)
+        print('giro es: ' + str(giro))
+        inc_x = avance * math.cos(giro_anterior+giro)
+        inc_y = avance * math.sin(giro_anterior+giro)
+        pos_anterior_x = inc_x + pos_anterior_x
+        pos_anterior_y = inc_y + pos_anterior_y
+        giro_anterior = giro + giro_anterior
+        if giro_anterior > 2*math.pi:
+            giro_anterior = 0
+        if giro_anterior <= (-2*math.pi):
+            giro_anterior = 0
+        print('X: ' + str(pos_anterior_x))
+        print('Y: ' + str(pos_anterior_y))
+        print('GIRO: ' + str(giro_anterior))
+
+    elif (tecla == kb.KeyCode.from_char('e')):
+        print('Pa alante izq: ' + str(tecla))
+        rueda_izq = conversion * CUARTO_CIRCUN*3
+        rueda_der = conversion * CUARTO_CIRCUN*4
+        avance = (rueda_izq + rueda_der) / 2
+        print('El avance ha sido: ' + str(avance))
+        giro = ((rueda_der-rueda_izq)/EJE_RUEDAS)
+        print('giro es: ' + str(giro))
+        inc_x = avance * math.cos(giro_anterior+giro)
+        inc_y = avance * math.sin(giro_anterior+giro)
+        pos_anterior_x = inc_x + pos_anterior_x
+        pos_anterior_y = inc_y + pos_anterior_y
+        giro_anterior = giro + giro_anterior
+        if giro_anterior >= 2*math.pi:
+            giro_anterior = 0
+        if giro_anterior <= (-2*math.pi):
+            giro_anterior = 0
+        print('X: ' + str(pos_anterior_x))
+        print('Y: ' + str(pos_anterior_y))
+        print('GIRO: ' + str(giro_anterior))
+        
+    elif (tecla == kb.KeyCode.from_char('q')):
+        print('Pa alante der: ' + str(tecla))
+        rueda_izq = conversion * CUARTO_CIRCUN*4
+        rueda_der = conversion * CUARTO_CIRCUN*3
+        avance = (rueda_izq + rueda_der) / 2
+        print('El avance ha sido: ' + str(avance))
+        giro = ((rueda_der-rueda_izq)/EJE_RUEDAS)
+        print('giro es: ' + str(giro))
+        inc_x = avance * math.cos(giro_anterior+giro)
+        inc_y = avance * math.sin(giro_anterior+giro)
+        pos_anterior_x = inc_x + pos_anterior_x
+        pos_anterior_y = inc_y + pos_anterior_y
+        giro_anterior = giro + giro_anterior
+        if giro_anterior > 2*math.pi:
+            giro_anterior = 0
+        if giro_anterior <= (-2*math.pi):
+            giro_anterior = 0
+        print('X: ' + str(pos_anterior_x))
+        print('Y: ' + str(pos_anterior_y))
+        print('GIRO: ' + str(giro_anterior))
+
+    elif (tecla == kb.KeyCode.from_char('z')):
+        print('rerape: ' + str(tecla))
+    
+    elif (tecla == kb.KeyCode.from_char('p')):
+        print('salir tontin: ' + str(tecla))
+        exit()
+
+    else:
+        print('Tecla invalida like your mom')
+    
+    # Limpiar pantalla
+    screen.fill(BLACK)
+
+    # Calcular los puntos finales de la línea
+    x2 = pos_anterior_x + math.cos(giro_anterior) * line_length
+    y2 = pos_anterior_y + math.sin(giro_anterior) * line_length
+
+    # Dibujar la línea
+    pygame.draw.line(screen, RED, (pos_anterior_x, pos_anterior_y), (x2, y2), 40)
+    pygame.draw.line(screen, WHITE, (pos_anterior_x, pos_anterior_y), (x2, y2), 35)
+    rastro.append((pos_anterior_x, pos_anterior_y))
+    for punto in rastro:
+        pygame.draw.rect(screen, WHITE, (punto[0], punto[1], 2, 2))
+
+    mostrar_texto("X: " + str(pos_anterior_x), 600, 0)
+    mostrar_texto("Y: " + str(pos_anterior_y), 600, 20)
+    mostrar_texto("ÁNGULO: " + str(giro_anterior*(180/math.pi)), 600, 40)
+
+    # Actualizar pantalla
+    pygame.display.flip()
+
+    # Limitar la velocidad de actualización
+    pygame.time.Clock().tick(30)
+
+def mostrar_texto(texto, x, y, tamano=20):
+    fuente = pygame.font.SysFont(None, tamano)
+    superficie_texto = fuente.render(texto, True, WHITE)
+    rectangulo_texto = superficie_texto.get_rect()
+    rectangulo_texto.topleft = (x, y)
+    screen.blit(superficie_texto, rectangulo_texto)
+
+conversion = calularConversion()
+print('Conversion anal: ' + str(conversion))
+with kb.Listener(pulsa) as escuchador:
+    escuchador.join()    
+
