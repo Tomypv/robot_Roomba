@@ -306,7 +306,7 @@ def pulsa(tecla):
 
 
 
-def movimiento_aleatorio():
+def movimiento_aleatorio(tecla):
     while True:
         #Calcular posicion del los encoders-TODO
 
@@ -319,7 +319,7 @@ def movimiento_aleatorio():
         
         #Calculos de odometria-TODO
         # Detener el movimiento si se presiona otra tecla
-        if kb.is_pressed('q'):  # Puedes cambiar 'q' por cualquier tecla para detener
+        if (tecla == kb.KeyCode.from_char('r')):  # Puedes cambiar 'r' por cualquier tecla para detener
             bot.drive_stop()
             break
 
