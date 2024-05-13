@@ -13,7 +13,9 @@ DIAM_RUEDAS = 72 #Es en milimetros
 RESOL_ENCODER = 508.8
 RELA_REDUCCION = 1
 CUARTO_CIRCUN = 1750/2
-
+pos_anterior_x = 0
+pos_anterior_y = 0
+giro_anterior = 0
 
 def calularConversion():
     conversion = (2*math.pi * (DIAM_RUEDAS/2)) / (RELA_REDUCCION*RESOL_ENCODER)
@@ -34,15 +36,17 @@ def pulsa(tecla):
 
 
     if (tecla == kb.KeyCode.from_char('w')):
-        Encoder_izq = bot.get_sensors('encoder_counts_left')
-        Encoder_der = bot.get_sensors('encoder_counts_rigth')
+        datos= bot.get_sensors()
+        Encoder_izq = datos.encoder_counts_left
+        Encoder_der = datos.encoder_counts_right
 
         #Mover robot
 
         bot.drive_direct(100, 100)
 
-        Encoder_izq_Act = bot.get_sensors('encoder_counts_left')
-        Encoder_der_Act = bot.get_sensors('encoder_counts_rigth')
+        datos= bot.get_sensors()
+        Encoder_izq_Act = datos.encoder_counts_left
+        Encoder_der_Act = datos.encoder_counts_right
 
         #Movimiento que ha realizado el robot
 
@@ -75,15 +79,17 @@ def pulsa(tecla):
         print('GIRO: ' + str(giro_anterior))
 
     elif (tecla == kb.KeyCode.from_char('s')):
-        Encoder_izq = bot.get_sensors('encoder_counts_left')
-        Encoder_der = bot.get_sensors('encoder_counts_rigth')
+        datos= bot.get_sensors()
+        Encoder_izq = datos.encoder_counts_left
+        Encoder_der = datos.encoder_counts_right
 
         #Mover robot
 
-        bot.drive_direct(100, 100)
+        bot.drive_direct(-100, -100)
 
-        Encoder_izq_Act = bot.get_sensors('encoder_counts_left')
-        Encoder_der_Act = bot.get_sensors('encoder_counts_rigth')
+        datos= bot.get_sensors()
+        Encoder_izq_Act = datos.encoder_counts_left
+        Encoder_der_Act = datos.encoder_counts_right
 
         #Movimiento que ha realizado el robot
 
@@ -116,15 +122,17 @@ def pulsa(tecla):
         print('GIRO: ' + str(giro_anterior))
 
     elif (tecla == kb.KeyCode.from_char('d')):
-        Encoder_izq = bot.get_sensors('encoder_counts_left')
-        Encoder_der = bot.get_sensors('encoder_counts_rigth')
+        datos= bot.get_sensors()
+        Encoder_izq = datos.encoder_counts_left
+        Encoder_der = datos.encoder_counts_right
 
         #Mover robot
 
-        bot.drive_direct(100, 100)
+        bot.drive_direct(100, -100)
 
-        Encoder_izq_Act = bot.get_sensors('encoder_counts_left')
-        Encoder_der_Act = bot.get_sensors('encoder_counts_rigth')
+        datos= bot.get_sensors()
+        Encoder_izq_Act = datos.encoder_counts_left
+        Encoder_der_Act = datos.encoder_counts_right
 
         #Movimiento que ha realizado el robot
 
@@ -157,15 +165,17 @@ def pulsa(tecla):
         print('GIRO: ' + str(giro_anterior))
 
     elif (tecla == kb.KeyCode.from_char('a')):
-        Encoder_izq = bot.get_sensors('encoder_counts_left')
-        Encoder_der = bot.get_sensors('encoder_counts_rigth')
+        datos= bot.get_sensors()
+        Encoder_izq = datos.encoder_counts_left
+        Encoder_der = datos.encoder_counts_right
 
         #Mover robot
 
-        bot.drive_direct(100, 100)
+        bot.drive_direct(-100, 100)
 
-        Encoder_izq_Act = bot.get_sensors('encoder_counts_left')
-        Encoder_der_Act = bot.get_sensors('encoder_counts_rigth')
+        datos= bot.get_sensors()
+        Encoder_izq_Act = datos.encoder_counts_left
+        Encoder_der_Act = datos.encoder_counts_right
 
         #Movimiento que ha realizado el robot
 
@@ -198,15 +208,17 @@ def pulsa(tecla):
         print('GIRO: ' + str(giro_anterior))
 
     elif (tecla == kb.KeyCode.from_char('e')):
-        Encoder_izq = bot.get_sensors('encoder_counts_left')
-        Encoder_der = bot.get_sensors('encoder_counts_rigth')
+        datos= bot.get_sensors()
+        Encoder_izq = datos.encoder_counts_left
+        Encoder_der = datos.encoder_counts_right
 
         #Mover robot
 
-        bot.drive_direct(100, 100)
+        bot.drive_direct(100, 50)
 
-        Encoder_izq_Act = bot.get_sensors('encoder_counts_left')
-        Encoder_der_Act = bot.get_sensors('encoder_counts_rigth')
+        datos= bot.get_sensors()
+        Encoder_izq_Act = datos.encoder_counts_left
+        Encoder_der_Act = datos.encoder_counts_right
 
         #Movimiento que ha realizado el robot
 
@@ -239,15 +251,17 @@ def pulsa(tecla):
         print('GIRO: ' + str(giro_anterior))
         
     elif (tecla == kb.KeyCode.from_char('q')):
-        Encoder_izq = bot.get_sensors('encoder_counts_left')
-        Encoder_der = bot.get_sensors('encoder_counts_rigth')
+        datos= bot.get_sensors()
+        Encoder_izq = datos.encoder_counts_left
+        Encoder_der = datos.encoder_counts_right
 
         #Mover robot
 
-        bot.drive_direct(100, 100)
+        bot.drive_direct(50, 100)
 
-        Encoder_izq_Act = bot.get_sensors('encoder_counts_left')
-        Encoder_der_Act = bot.get_sensors('encoder_counts_rigth')
+        datos= bot.get_sensors()
+        Encoder_izq_Act = datos.encoder_counts_left
+        Encoder_der_Act = datos.encoder_counts_right
 
         #Movimiento que ha realizado el robot
 
@@ -270,10 +284,7 @@ def pulsa(tecla):
         pos_anterior_x = inc_x + pos_anterior_x
         pos_anterior_y = inc_y + pos_anterior_y
 
-        if giro_anterior > 2*math.pi:
-            giro_anterior = 0
-        if giro_anterior <= (-2*math.pi):
-            giro_anterior = 0
+ 
 
         print('X: ' + str(pos_anterior_x))
         print('Y: ' + str(pos_anterior_y))
