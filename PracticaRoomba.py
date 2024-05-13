@@ -295,7 +295,7 @@ def pulsa(tecla):
         print('salir tontin: ' + str(tecla))
         exit()
     elif (tecla == kb.KeyCode.from_char('r')):
-        movimiento_aleatorio()
+        movimiento_aleatorio(tecla)
         exit()
     else:
         print('Tecla invalida like your mom')
@@ -307,21 +307,19 @@ def pulsa(tecla):
 
 
 def movimiento_aleatorio(tecla):
-    while True:
-        #Calcular posicion del los encoders-TODO
+    start_time = time.time()  # Guarda el tiempo de inicio
+    while time.time() - start_time < 5:  # Ejecuta el bucle mientras no se superen los 5 segundos
+        # Calcular posición de los encoders - TODO
 
         # Generar velocidades aleatorias para cada rueda
         velocidad_izquierda = random.randint(-500, 500)
         velocidad_derecha = random.randint(-500, 500)
         bot.drive_direct(velocidad_izquierda, velocidad_derecha)
         time.sleep(0.5)  # Pausa breve para permitir el movimiento
-        #Recalcular posicion de los encoders y guardar movimiento de encoder en los arrays-TODO
+
+        # Recalcular posición de los encoders y guardar movimiento de encoder en los arrays - TODO
         
-        #Calculos de odometria-TODO
-        # Detener el movimiento si se presiona otra tecla
-        if (tecla == kb.KeyCode.from_char('r')):  # Puedes cambiar 'r' por cualquier tecla para detener
-            bot.drive_stop()
-            break
+        # Cálculos de odometría - TODO
 
 def vuelta_a_casa(historico_izq, historico_der):
 
