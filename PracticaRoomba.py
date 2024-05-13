@@ -159,7 +159,7 @@ def pulsa(tecla):
             giro_anterior = 0
         if giro_anterior <= (-2*math.pi):
             giro_anterior = 0
-
+        giro_anterior = Giro + giro_anterior
         print('X: ' + str(pos_anterior_x))
         print('Y: ' + str(pos_anterior_y))
         print('GIRO: ' + str(giro_anterior))
@@ -202,7 +202,7 @@ def pulsa(tecla):
             giro_anterior = 0
         if giro_anterior <= (-2*math.pi):
             giro_anterior = 0
-
+        giro_anterior = Giro + giro_anterior    
         print('X: ' + str(pos_anterior_x))
         print('Y: ' + str(pos_anterior_y))
         print('GIRO: ' + str(giro_anterior))
@@ -245,7 +245,7 @@ def pulsa(tecla):
             giro_anterior = 0
         if giro_anterior <= (-2*math.pi):
             giro_anterior = 0
-
+        giro_anterior = Giro + giro_anterior
         print('X: ' + str(pos_anterior_x))
         print('Y: ' + str(pos_anterior_y))
         print('GIRO: ' + str(giro_anterior))
@@ -284,8 +284,8 @@ def pulsa(tecla):
         pos_anterior_x = inc_x + pos_anterior_x
         pos_anterior_y = inc_y + pos_anterior_y
 
- 
-
+        giro_anterior = Giro + giro_anterior
+        
         print('X: ' + str(pos_anterior_x))
         print('Y: ' + str(pos_anterior_y))
         print('GIRO: ' + str(giro_anterior))
