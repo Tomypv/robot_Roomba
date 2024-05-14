@@ -297,6 +297,10 @@ def pulsa(tecla):
     elif (tecla == kb.KeyCode.from_char('r')):
         movimiento_aleatorio(tecla)
         exit()
+
+    elif (tecla = kb.KeyCode.from_char('f')):
+        busca_perimetro()
+
     else:
         print('Tecla invalida like your mom')
     
@@ -330,6 +334,68 @@ def vuelta_a_casa(historico_izq, historico_der):
     for i in range(longitud - 1, -1, -1):
         bot.drive_direct(-historico_izq[i], -historico_der[i])
 
+
+
+def busca_perimetro():
+
+    choque_frontal = False
+    choque_der = False
+    choque_izq = False
+    choque_frontal_der = False
+    choque_frontal_izq = False
+
+    primera_pared = False
+
+    
+    # Bucle principal, no se cuando parar, estaría bien cuando haya recorrido todo el perímetro y llegue a la posición del primer choque -> datos_inicio
+    # Hasta que posicion sea datos_inicio???
+    while True:
+        # Movimiento hacia adelante
+        bot.drive_direct(10, 10)
+        # Espera de medio segundo
+        bot.wait_time(0.1)
+
+        # Obtener los datos de los sensores
+        datos = bot.get_sensors()
+    
+        # Actualizar los valores de los sensores de choque
+        choque_frontal = datos.wall
+        choque_der = datos.cliff_right
+        choque_izq = datos.cliff_left
+        choque_frontal_der = datos.cliff_front_left
+        choque_frontal_izq = datos.cliff_front_right
+
+        # Obtener los datos de los sensores
+        luz_der = datos.light_bumper_right
+        luz_frontal_der = datos.light_bumper_front_right
+
+        
+        # Detectar colisión
+        if choque_frontal or choque_der or choque_izq or choque_frontal_der or choque_frontal_izq:  
+            # Retrocede
+            bot.drive_direct(-10, -10)
+            bot.wait_time(0.1)
+            # Gira a la izquierda
+            bot.drive_direct(-10, 10)
+            bot.wait_time(0.1)
+
+            #Guardamos datos primera pared para finalizar ahi -> QUE EL ROBOT SEPA QUE YA DIO LA VUELTA (NO SÉ COMO AJJAJAJJA)
+            if not primera_pared
+                #datos_inicio = los que sea   
+
+            primera_pared = True
+        
+        elif (luz_der == 0 or luz_frontal_der == 0) and primera_pared: # Si se deja de detectar la pared a la derecha, seguir la pared, EL SENSOR DEVUELVE UN NUMERO MAYOR CUANTO MAS CERCA ESTA DE LA PARED
+            # DUDA -> NO SE SI SE DEBERIA DE MOVER ALANTE AQUI
+            """
+            bot.drive_direct(10, 10)
+            bot.wait_time(0.1)
+            """
+
+            #Girar a la derecha 
+            bot.drive_direct(10,-10)
+            bot.wait_time(0.1)
+            
 
 
 
