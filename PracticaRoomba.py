@@ -3,6 +3,7 @@ import math
 from pycreate2 import Create2
 from pynput import keyboard as kb
 import random
+import pygame
 import time
 #Especificaciones del Robot
 
@@ -12,17 +13,34 @@ EJE_RUEDAS = 235 #Es en milimetros
 DIAM_RUEDAS = 72 #Es en milimetros
 RESOL_ENCODER = 508.8
 RELA_REDUCCION = 1
-CUARTO_CIRCUN = 1750/2
 pos_anterior_x = 0
 pos_anterior_y = 0
 giro_anterior = 0
+pygame.init()
+# Definir dimensiones de la ventana
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Mapa del Robot")
 
+# Función para dibujar el mapa
+def dibujar_mapa(x, y, rastro):
+    screen.fill(NEGRO)  # Limpiar pantalla
+    pygame.draw.rect(screen, BLANCO, (x, y, ANCHO, LARGO))  # Dibujar robot (rectángulo)
+    for punto in rastro:
+        pygame.draw.rect(screen, ROJO, (punto[0], punto[1], 2, 2))  # Dibujar rastro del robot
+        
+    mostrar_texto("X: " + str(pos_anterior_x), 600, 0)
+    mostrar_texto("Y: " + str(pos_anterior_y), 600, 20)
+    mostrar_texto("ÁNGULO: " + str(giro_anterior*(180/math.pi)), 600, 40)
+    pygame.display.flip()  # Actualizar pantalla
 def calularConversion():
     conversion = (2*math.pi * (DIAM_RUEDAS/2)) / (RELA_REDUCCION*RESOL_ENCODER)
     
     return conversion
 
-
+NEGRO = (0, 0, 0)
+BLANCO = (255, 255, 255)
+ROJO = (255, 0, 0)
 
 ##Mover Robot Calculando la odometria y posicion en ese momento del robot
 
@@ -32,6 +50,7 @@ def pulsa(tecla):
     global giro_anterior
     historico_der = []
     historico_izq = []
+    rastro = []
 
 
 
@@ -62,10 +81,10 @@ def pulsa(tecla):
 
         avance_promedio = (Desplazamiento_der - Desplazamiento_izq) / 2
 
-        Giro = ((Desplazamiento_der - Desplazamiento_izq)/ EJE_RUEDAS)
+        giro = ((Desplazamiento_der - Desplazamiento_izq)/ EJE_RUEDAS)
 
-        inc_x = avance_promedio * math.cos(giro_anterior+Giro)
-        inc_y = avance_promedio * math.sin(giro_anterior+Giro)
+        inc_x = avance_promedio * math.cos(giro_anterior+giro)
+        inc_y = avance_promedio * math.sin(giro_anterior+giro)
         pos_anterior_x = inc_x + pos_anterior_x
         pos_anterior_y = inc_y + pos_anterior_y
 
@@ -73,10 +92,16 @@ def pulsa(tecla):
             giro_anterior = 0
         if giro_anterior <= (-2*math.pi):
             giro_anterior = 0
+        giro_anterior += giro
 
+            # Actualizar rastro
+        rastro.append((pos_anterior_x, pos_anterior_y))
+
+            # Dibujar mapa
+        dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro)
         print('X: ' + str(pos_anterior_x))
         print('Y: ' + str(pos_anterior_y))
-        print('GIRO: ' + str(giro_anterior))
+        print('giro: ' + str(giro_anterior))
 
     elif (tecla == kb.KeyCode.from_char('s')):
         datos= bot.get_sensors()
@@ -105,10 +130,10 @@ def pulsa(tecla):
 
         avance_promedio = (Desplazamiento_der - Desplazamiento_izq) / 2
 
-        Giro = ((Desplazamiento_der - Desplazamiento_izq)/ EJE_RUEDAS)
+        giro = ((Desplazamiento_der - Desplazamiento_izq)/ EJE_RUEDAS)
 
-        inc_x = avance_promedio * math.cos(giro_anterior+Giro)
-        inc_y = avance_promedio * math.sin(giro_anterior+Giro)
+        inc_x = avance_promedio * math.cos(giro_anterior+giro)
+        inc_y = avance_promedio * math.sin(giro_anterior+giro)
         pos_anterior_x = inc_x + pos_anterior_x
         pos_anterior_y = inc_y + pos_anterior_y
 
@@ -116,10 +141,16 @@ def pulsa(tecla):
             giro_anterior = 0
         if giro_anterior <= (-2*math.pi):
             giro_anterior = 0
+        
+        giro_anterior += giro
+            # Actualizar rastro
+        rastro.append((pos_anterior_x, pos_anterior_y))
+            # Dibujar mapa
+        dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro)
 
         print('X: ' + str(pos_anterior_x))
         print('Y: ' + str(pos_anterior_y))
-        print('GIRO: ' + str(giro_anterior))
+        print('giro: ' + str(giro_anterior))
 
     elif (tecla == kb.KeyCode.from_char('d')):
         datos= bot.get_sensors()
@@ -148,10 +179,10 @@ def pulsa(tecla):
 
         avance_promedio = (Desplazamiento_der - Desplazamiento_izq) / 2
 
-        Giro = ((Desplazamiento_der - Desplazamiento_izq)/ EJE_RUEDAS)
+        giro = ((Desplazamiento_der - Desplazamiento_izq)/ EJE_RUEDAS)
 
-        inc_x = avance_promedio * math.cos(giro_anterior+Giro)
-        inc_y = avance_promedio * math.sin(giro_anterior+Giro)
+        inc_x = avance_promedio * math.cos(giro_anterior+giro)
+        inc_y = avance_promedio * math.sin(giro_anterior+giro)
         pos_anterior_x = inc_x + pos_anterior_x
         pos_anterior_y = inc_y + pos_anterior_y
 
@@ -159,10 +190,14 @@ def pulsa(tecla):
             giro_anterior = 0
         if giro_anterior <= (-2*math.pi):
             giro_anterior = 0
-        giro_anterior = Giro + giro_anterior
+        giro_anterior = giro + giro_anterior
+        rastro.append((pos_anterior_x, pos_anterior_y))
+
+            # Dibujar mapa
+        dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro)
         print('X: ' + str(pos_anterior_x))
         print('Y: ' + str(pos_anterior_y))
-        print('GIRO: ' + str(giro_anterior))
+        print('giro: ' + str(giro_anterior))
 
     elif (tecla == kb.KeyCode.from_char('a')):
         datos= bot.get_sensors()
@@ -191,10 +226,10 @@ def pulsa(tecla):
 
         avance_promedio = (Desplazamiento_der - Desplazamiento_izq) / 2
 
-        Giro = ((Desplazamiento_der - Desplazamiento_izq)/ EJE_RUEDAS)
+        giro = ((Desplazamiento_der - Desplazamiento_izq)/ EJE_RUEDAS)
 
-        inc_x = avance_promedio * math.cos(giro_anterior+Giro)
-        inc_y = avance_promedio * math.sin(giro_anterior+Giro)
+        inc_x = avance_promedio * math.cos(giro_anterior+giro)
+        inc_y = avance_promedio * math.sin(giro_anterior+giro)
         pos_anterior_x = inc_x + pos_anterior_x
         pos_anterior_y = inc_y + pos_anterior_y
 
@@ -202,10 +237,14 @@ def pulsa(tecla):
             giro_anterior = 0
         if giro_anterior <= (-2*math.pi):
             giro_anterior = 0
-        giro_anterior = Giro + giro_anterior    
+        giro_anterior = giro + giro_anterior 
+        rastro.append((pos_anterior_x, pos_anterior_y))
+
+            # Dibujar mapa
+        dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro)   
         print('X: ' + str(pos_anterior_x))
         print('Y: ' + str(pos_anterior_y))
-        print('GIRO: ' + str(giro_anterior))
+        print('giro: ' + str(giro_anterior))
 
     elif (tecla == kb.KeyCode.from_char('e')):
         datos= bot.get_sensors()
@@ -234,10 +273,10 @@ def pulsa(tecla):
 
         avance_promedio = (Desplazamiento_der - Desplazamiento_izq) / 2
 
-        Giro = ((Desplazamiento_der - Desplazamiento_izq)/ EJE_RUEDAS)
+        giro = ((Desplazamiento_der - Desplazamiento_izq)/ EJE_RUEDAS)
 
-        inc_x = avance_promedio * math.cos(giro_anterior+Giro)
-        inc_y = avance_promedio * math.sin(giro_anterior+Giro)
+        inc_x = avance_promedio * math.cos(giro_anterior+giro)
+        inc_y = avance_promedio * math.sin(giro_anterior+giro)
         pos_anterior_x = inc_x + pos_anterior_x
         pos_anterior_y = inc_y + pos_anterior_y
 
@@ -245,10 +284,14 @@ def pulsa(tecla):
             giro_anterior = 0
         if giro_anterior <= (-2*math.pi):
             giro_anterior = 0
-        giro_anterior = Giro + giro_anterior
+        giro_anterior = giro + giro_anterior
+        rastro.append((pos_anterior_x, pos_anterior_y))
+
+            # Dibujar mapa
+        dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro) 
         print('X: ' + str(pos_anterior_x))
         print('Y: ' + str(pos_anterior_y))
-        print('GIRO: ' + str(giro_anterior))
+        print('giro: ' + str(giro_anterior))
         
     elif (tecla == kb.KeyCode.from_char('q')):
         datos= bot.get_sensors()
@@ -277,18 +320,21 @@ def pulsa(tecla):
 
         avance_promedio = (Desplazamiento_der - Desplazamiento_izq) / 2
 
-        Giro = ((Desplazamiento_der - Desplazamiento_izq)/ EJE_RUEDAS)
+        giro = ((Desplazamiento_der - Desplazamiento_izq)/ EJE_RUEDAS)
 
-        inc_x = avance_promedio * math.cos(giro_anterior+Giro)
-        inc_y = avance_promedio * math.sin(giro_anterior+Giro)
+        inc_x = avance_promedio * math.cos(giro_anterior+giro)
+        inc_y = avance_promedio * math.sin(giro_anterior+giro)
         pos_anterior_x = inc_x + pos_anterior_x
         pos_anterior_y = inc_y + pos_anterior_y
 
-        giro_anterior = Giro + giro_anterior
-        
+        giro_anterior = giro + giro_anterior
+        rastro.append((pos_anterior_x, pos_anterior_y))
+
+            # Dibujar mapa
+        dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro) 
         print('X: ' + str(pos_anterior_x))
         print('Y: ' + str(pos_anterior_y))
-        print('GIRO: ' + str(giro_anterior))
+        print('giro: ' + str(giro_anterior))
 
     
     elif (tecla == kb.KeyCode.from_char('p')):
@@ -298,7 +344,7 @@ def pulsa(tecla):
         movimiento_aleatorio(tecla)
         exit()
 
-    elif (tecla = kb.KeyCode.from_char('f')):
+    elif (tecla == kb.KeyCode.from_char('f')):
         busca_perimetro()
 
     else:
@@ -380,10 +426,10 @@ def busca_perimetro():
             bot.wait_time(0.1)
 
             #Guardamos datos primera pared para finalizar ahi -> QUE EL ROBOT SEPA QUE YA DIO LA VUELTA (NO SÉ COMO AJJAJAJJA)
-            if not primera_pared
+            if not primera_pared:
                 #datos_inicio = los que sea   
 
-            primera_pared = True
+                primera_pared = True
         
         elif (luz_der == 0 or luz_frontal_der == 0) and primera_pared: # Si se deja de detectar la pared a la derecha, seguir la pared, EL SENSOR DEVUELVE UN NUMERO MAYOR CUANTO MAS CERCA ESTA DE LA PARED
             # DUDA -> NO SE SI SE DEBERIA DE MOVER ALANTE AQUI
@@ -398,7 +444,12 @@ def busca_perimetro():
             
 
 
-
+def mostrar_texto(texto, x, y, tamano=20):
+    fuente = pygame.font.SysFont(None, tamano)
+    superficie_texto = fuente.render(texto, True, BLANCO)
+    rectangulo_texto = superficie_texto.get_rect()
+    rectangulo_texto.topleft = (x, y)
+    screen.blit(superficie_texto, rectangulo_texto)
 # Crear una instancia de Create2 y establecer la conexión
 port = "COM6"  # Puerto serial donde está conectado el Roomba
 bot = Create2(port)
