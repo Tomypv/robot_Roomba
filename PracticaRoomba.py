@@ -28,7 +28,7 @@ def dibujar_mapa(x, y, rastro):
     pygame.draw.rect(screen, BLANCO, (x, y, ANCHO, LARGO))  # Dibujar robot (rectángulo)
     for punto in rastro:
         pygame.draw.rect(screen, ROJO, (punto[0], punto[1], 2, 2))  # Dibujar rastro del robot
-        
+
     mostrar_texto("X: " + str(pos_anterior_x), 600, 0)
     mostrar_texto("Y: " + str(pos_anterior_y), 600, 20)
     mostrar_texto("ÁNGULO: " + str(giro_anterior*(180/math.pi)), 600, 40)
@@ -71,8 +71,8 @@ def pulsa(tecla):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(Encoder_der_Act)
-        historico_izq.append(Encoder_izq_Act)
+        historico_der.append(100)
+        historico_izq.append(100)
 
         #Calculos de odometria
 
@@ -99,9 +99,14 @@ def pulsa(tecla):
 
             # Dibujar mapa
         dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro)
+
+        time.sleep(1)
+        bot.drive_stop()
+
         print('X: ' + str(pos_anterior_x))
         print('Y: ' + str(pos_anterior_y))
         print('giro: ' + str(giro_anterior))
+
 
     elif (tecla == kb.KeyCode.from_char('s')):
         datos= bot.get_sensors()
@@ -120,8 +125,8 @@ def pulsa(tecla):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(Encoder_der_Act)
-        historico_izq.append(Encoder_izq_Act)
+        historico_der.append(-100)
+        historico_izq.append(-100)
 
         #Calculos de odometria
 
@@ -147,7 +152,8 @@ def pulsa(tecla):
         rastro.append((pos_anterior_x, pos_anterior_y))
             # Dibujar mapa
         dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro)
-
+        time.sleep(1)
+        bot.drive_stop()
         print('X: ' + str(pos_anterior_x))
         print('Y: ' + str(pos_anterior_y))
         print('giro: ' + str(giro_anterior))
@@ -169,8 +175,8 @@ def pulsa(tecla):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(Encoder_der_Act)
-        historico_izq.append(Encoder_izq_Act)
+        historico_der.append(-100)
+        historico_izq.append(100)
 
         #Calculos de odometria
 
@@ -192,7 +198,8 @@ def pulsa(tecla):
             giro_anterior = 0
         giro_anterior = giro + giro_anterior
         rastro.append((pos_anterior_x, pos_anterior_y))
-
+        time.sleep(1)
+        bot.drive_stop()
             # Dibujar mapa
         dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro)
         print('X: ' + str(pos_anterior_x))
@@ -216,8 +223,8 @@ def pulsa(tecla):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(Encoder_der_Act)
-        historico_izq.append(Encoder_izq_Act)
+        historico_der.append(100)
+        historico_izq.append(-100)
 
         #Calculos de odometria
 
@@ -239,7 +246,8 @@ def pulsa(tecla):
             giro_anterior = 0
         giro_anterior = giro + giro_anterior 
         rastro.append((pos_anterior_x, pos_anterior_y))
-
+        time.sleep(1)
+        bot.drive_stop()
             # Dibujar mapa
         dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro)   
         print('X: ' + str(pos_anterior_x))
@@ -263,8 +271,8 @@ def pulsa(tecla):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(Encoder_der_Act)
-        historico_izq.append(Encoder_izq_Act)
+        historico_der.append(50)
+        historico_izq.append(100)
 
         #Calculos de odometria
 
@@ -287,6 +295,8 @@ def pulsa(tecla):
         giro_anterior = giro + giro_anterior
         rastro.append((pos_anterior_x, pos_anterior_y))
 
+        time.sleep(1)
+        bot.drive_stop()
             # Dibujar mapa
         dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro) 
         print('X: ' + str(pos_anterior_x))
@@ -310,8 +320,8 @@ def pulsa(tecla):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(Encoder_der_Act)
-        historico_izq.append(Encoder_izq_Act)
+        historico_der.append(100)
+        historico_izq.append(50)
 
         #Calculos de odometria
 
@@ -330,6 +340,8 @@ def pulsa(tecla):
         giro_anterior = giro + giro_anterior
         rastro.append((pos_anterior_x, pos_anterior_y))
 
+        time.sleep(1)
+        bot.drive_stop()
             # Dibujar mapa
         dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro) 
         print('X: ' + str(pos_anterior_x))
@@ -379,6 +391,7 @@ def vuelta_a_casa(historico_izq, historico_der):
     longitud = len(historico_izq)
     for i in range(longitud - 1, -1, -1):
         bot.drive_direct(-historico_izq[i], -historico_der[i])
+        time.sleep(1)
 
 
 
