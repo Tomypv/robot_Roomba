@@ -16,6 +16,7 @@ RELA_REDUCCION = 1
 pos_anterior_x = 0
 pos_anterior_y = 0
 giro_anterior = 0
+i = 1.0  # Inicializar i a 1.0 (velocidad normal)
 pygame.init()
 # Definir dimensiones de la ventana
 WIDTH, HEIGHT = 800, 600
@@ -51,6 +52,7 @@ def pulsa(tecla):
     historico_der = []
     historico_izq = []
     rastro = []
+    global i  
 
 
 
@@ -61,7 +63,7 @@ def pulsa(tecla):
 
         #Mover robot
 
-        bot.drive_direct(100, 100)
+        bot.drive_direct(100*i, 100*i)
 
         datos= bot.get_sensors()
         Encoder_izq_Act = datos.encoder_counts_left
@@ -71,8 +73,8 @@ def pulsa(tecla):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(100)
-        historico_izq.append(100)
+        historico_der.append(100*i)
+        historico_izq.append(100*i)
 
         #Calculos de odometria
 
@@ -115,7 +117,7 @@ def pulsa(tecla):
 
         #Mover robot
 
-        bot.drive_direct(-100, -100)
+        bot.drive_direct(-100*i, -100*i)
 
         datos= bot.get_sensors()
         Encoder_izq_Act = datos.encoder_counts_left
@@ -125,8 +127,8 @@ def pulsa(tecla):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(-100)
-        historico_izq.append(-100)
+        historico_der.append(-100*i)
+        historico_izq.append(-100*i)
 
         #Calculos de odometria
 
@@ -165,7 +167,7 @@ def pulsa(tecla):
 
         #Mover robot
 
-        bot.drive_direct(100, -100)
+        bot.drive_direct(100*i, -100*i)
 
         datos= bot.get_sensors()
         Encoder_izq_Act = datos.encoder_counts_left
@@ -175,8 +177,8 @@ def pulsa(tecla):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(-100)
-        historico_izq.append(100)
+        historico_der.append(-100*i)
+        historico_izq.append(100*i)
 
         #Calculos de odometria
 
@@ -213,7 +215,7 @@ def pulsa(tecla):
 
         #Mover robot
 
-        bot.drive_direct(-100, 100)
+        bot.drive_direct(-100*i, 100*i)
 
         datos= bot.get_sensors()
         Encoder_izq_Act = datos.encoder_counts_left
@@ -223,8 +225,8 @@ def pulsa(tecla):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(100)
-        historico_izq.append(-100)
+        historico_der.append(100*i)
+        historico_izq.append(-100*i)
 
         #Calculos de odometria
 
@@ -261,7 +263,7 @@ def pulsa(tecla):
 
         #Mover robot
 
-        bot.drive_direct(100, 50)
+        bot.drive_direct(100*i, 50*i)
 
         datos= bot.get_sensors()
         Encoder_izq_Act = datos.encoder_counts_left
@@ -271,8 +273,8 @@ def pulsa(tecla):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(50)
-        historico_izq.append(100)
+        historico_der.append(50*i)
+        historico_izq.append(100*i)
 
         #Calculos de odometria
 
@@ -310,7 +312,7 @@ def pulsa(tecla):
 
         #Mover robot
 
-        bot.drive_direct(50, 100)
+        bot.drive_direct(50*i, 100*i)
 
         datos= bot.get_sensors()
         Encoder_izq_Act = datos.encoder_counts_left
@@ -320,8 +322,8 @@ def pulsa(tecla):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(100)
-        historico_izq.append(50)
+        historico_der.append(100*i)
+        historico_izq.append(50*i)
 
         #Calculos de odometria
 
