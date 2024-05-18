@@ -350,6 +350,12 @@ def pulsa(tecla):
         print('Y: ' + str(pos_anterior_y))
         print('giro: ' + str(giro_anterior))
 
+    # Manejar cambio de velocidad
+    elif tecla == kb.KeyCode.from_char('n'):
+        i = max(0.25, i - 0.25)  # Disminuir i en 0.25, con un mínimo de 0.25
+    elif tecla == kb.KeyCode.from_char('m'):
+        i = min(4.0, i + 0.25)  # Aumentar i en 0.25, con un máximo de 4.0
+
     
     elif (tecla == kb.KeyCode.from_char('p')):
         print('salir tontin: ' + str(tecla))
