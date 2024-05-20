@@ -413,18 +413,60 @@ def busca_perimetro():
 
     primera_pared = False
 
+    historico_der = []
+    historico_izq = []
+    rastro = []
+
     
     # Bucle principal, no se cuando parar, estaría bien cuando haya recorrido todo el perímetro y llegue a la posición del primer choque -> datos_inicio
     # Hasta que posicion sea datos_inicio???
     while True:
+
+        datos= bot.get_sensors()
+        Encoder_izq = datos.encoder_counts_left
+        Encoder_der = datos.encoder_counts_right
         # Movimiento hacia adelante
         bot.drive_direct(10, 10)
         # Espera de medio segundo
         bot.wait_time(0.1)
 
         # Obtener los datos de los sensores
-        datos = bot.get_sensors()
-    
+        datos= bot.get_sensors()
+        Encoder_izq_Act = datos.encoder_counts_left
+        Encoder_der_Act = datos.encoder_counts_right
+
+        Encoder_der_Act = Encoder_der_Act - Encoder_der
+        Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
+        historico_der.append(10)  
+        historico_izq.append(10)  
+
+        Desplazamiento_der = Encoder_der_Act * conversion
+        Desplazamiento_izq = Encoder_izq_Act * conversion
+
+        avance_promedio = (Desplazamiento_der - Desplazamiento_izq) / 2
+
+        giro = ((Desplazamiento_der - Desplazamiento_izq)/ EJE_RUEDAS)
+
+        inc_x = avance_promedio * math.cos(giro_anterior+giro)
+        inc_y = avance_promedio * math.sin(giro_anterior+giro)
+        pos_anterior_x = inc_x + pos_anterior_x
+        pos_anterior_y = inc_y + pos_anterior_y
+
+        if giro_anterior > 2*math.pi:
+            giro_anterior = 0
+        if giro_anterior <= (-2*math.pi):
+            giro_anterior = 0
+        giro_anterior = giro + giro_anterior
+        rastro.append((pos_anterior_x, pos_anterior_y))
+       
+        # time.sleep(1)      Esto lo colocamos mañana
+        # bot.drive_stop()   Esto lo colocamos mañana
+            # Dibujar mapa
+        dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro) 
+        print('X: ' + str(pos_anterior_x))
+        print('Y: ' + str(pos_anterior_y))
+        print('giro: ' + str(giro_anterior))
+
         # Actualizar los valores de los sensores de choque
         choque_frontal = datos.wall
         choque_der = datos.cliff_right
@@ -439,12 +481,95 @@ def busca_perimetro():
         
         # Detectar colisión
         if choque_frontal or choque_der or choque_izq or choque_frontal_der or choque_frontal_izq:  
+
+            datos= bot.get_sensors()
+            Encoder_izq = datos.encoder_counts_left
+            Encoder_der = datos.encoder_counts_right
+
             # Retrocede
             bot.drive_direct(-10, -10)
             bot.wait_time(0.1)
+
+            # Obtener los datos de los sensores
+            datos= bot.get_sensors()
+            Encoder_izq_Act = datos.encoder_counts_left
+            Encoder_der_Act = datos.encoder_counts_right
+
+            Encoder_der_Act = Encoder_der_Act - Encoder_der
+            Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
+            historico_der.append(-10)  
+            historico_izq.append(-10)  
+
+            Desplazamiento_der = Encoder_der_Act * conversion
+            Desplazamiento_izq = Encoder_izq_Act * conversion
+
+            avance_promedio = (Desplazamiento_der - Desplazamiento_izq) / 2
+
+            giro = ((Desplazamiento_der - Desplazamiento_izq)/ EJE_RUEDAS)
+
+            inc_x = avance_promedio * math.cos(giro_anterior+giro)
+            inc_y = avance_promedio * math.sin(giro_anterior+giro)
+            pos_anterior_x = inc_x + pos_anterior_x
+            pos_anterior_y = inc_y + pos_anterior_y
+
+            if giro_anterior > 2*math.pi:
+                giro_anterior = 0
+            if giro_anterior <= (-2*math.pi):
+                giro_anterior = 0
+            giro_anterior = giro + giro_anterior
+            rastro.append((pos_anterior_x, pos_anterior_y))
+        
+            # time.sleep(1)      Esto lo colocamos mañana
+            # bot.drive_stop()   Esto lo colocamos mañana
+                # Dibujar mapa
+            dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro) 
+            print('X: ' + str(pos_anterior_x))
+            print('Y: ' + str(pos_anterior_y))
+            print('giro: ' + str(giro_anterior))
+
+            datos= bot.get_sensors()
+            Encoder_izq = datos.encoder_counts_left
+            Encoder_der = datos.encoder_counts_right
             # Gira a la izquierda
             bot.drive_direct(-10, 10)
             bot.wait_time(0.1)
+
+            # Obtener los datos de los sensores
+            datos= bot.get_sensors()
+            Encoder_izq_Act = datos.encoder_counts_left
+            Encoder_der_Act = datos.encoder_counts_right
+
+            Encoder_der_Act = Encoder_der_Act - Encoder_der
+            Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
+            historico_der.append(10)  
+            historico_izq.append(-10)  
+
+            Desplazamiento_der = Encoder_der_Act * conversion
+            Desplazamiento_izq = Encoder_izq_Act * conversion
+
+            avance_promedio = (Desplazamiento_der - Desplazamiento_izq) / 2
+
+            giro = ((Desplazamiento_der - Desplazamiento_izq)/ EJE_RUEDAS)
+
+            inc_x = avance_promedio * math.cos(giro_anterior+giro)
+            inc_y = avance_promedio * math.sin(giro_anterior+giro)
+            pos_anterior_x = inc_x + pos_anterior_x
+            pos_anterior_y = inc_y + pos_anterior_y
+
+            if giro_anterior > 2*math.pi:
+                giro_anterior = 0
+            if giro_anterior <= (-2*math.pi):
+                giro_anterior = 0
+            giro_anterior = giro + giro_anterior
+            rastro.append((pos_anterior_x, pos_anterior_y))
+        
+            # time.sleep(1)      Esto lo colocamos mañana
+            # bot.drive_stop()   Esto lo colocamos mañana
+                # Dibujar mapa
+            dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro) 
+            print('X: ' + str(pos_anterior_x))
+            print('Y: ' + str(pos_anterior_y))
+            print('giro: ' + str(giro_anterior))
 
             #Guardamos datos primera pared para finalizar ahi -> QUE EL ROBOT SEPA QUE YA DIO LA VUELTA (NO SÉ COMO AJJAJAJJA)
             if not primera_pared:
