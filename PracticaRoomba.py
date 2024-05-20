@@ -9,8 +9,8 @@ import time
 
 ANCHO = 5
 LARGO = 5
-EJE_RUEDAS = 235 #Es en milimetros
-DIAM_RUEDAS = 72 #Es en milimetros
+EJE_RUEDAS = 23.5 #Es en milimetros
+DIAM_RUEDAS = 7.2 #Es en milimetros
 RESOL_ENCODER = 508.8
 RELA_REDUCCION = 1
 pos_anterior_x = 0
@@ -63,7 +63,7 @@ def pulsa(tecla):
 
         #Mover robot
 
-        bot.drive_direct(100*i, 100*i)
+        bot.drive_direct(100, 100)
         time.sleep(1)
         bot.drive_stop()
         datos= bot.get_sensors()
@@ -74,16 +74,18 @@ def pulsa(tecla):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(100*i)
-        historico_izq.append(100*i)
+        historico_der.append(100)
+        historico_izq.append(100)
 
         #Calculos de odometria
 
         Desplazamiento_der = Encoder_der_Act * conversion
         Desplazamiento_izq = Encoder_izq_Act * conversion
 
-        avance_promedio = (Desplazamiento_der - Desplazamiento_izq) / 2
-
+        avance_promedio = (Desplazamiento_der + Desplazamiento_izq) / 2
+        print('Avance derecho' + str(Desplazamiento_der))
+        print('Avance izquierdo' + str(Desplazamiento_izq))
+        print('Avance: ' + str(avance_promedio))
         giro = ((Desplazamiento_der - Desplazamiento_izq)/ EJE_RUEDAS)
 
         inc_x = avance_promedio * math.cos(giro_anterior+giro)
@@ -117,7 +119,7 @@ def pulsa(tecla):
 
         #Mover robot
 
-        bot.drive_direct(-100*i, -100*i)
+        bot.drive_direct(-100, -100)
         time.sleep(1)
         bot.drive_stop()
         datos= bot.get_sensors()
@@ -128,15 +130,16 @@ def pulsa(tecla):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(-100*i)
-        historico_izq.append(-100*i)
+        historico_der.append(-100)
+        historico_izq.append(-100)
 
         #Calculos de odometria
 
         Desplazamiento_der = Encoder_der_Act * conversion
         Desplazamiento_izq = Encoder_izq_Act * conversion
 
-        avance_promedio = (Desplazamiento_der - Desplazamiento_izq) / 2
+        avance_promedio = (Desplazamiento_der + Desplazamiento_izq) / 2
+
 
         giro = ((Desplazamiento_der - Desplazamiento_izq)/ EJE_RUEDAS)
 
@@ -166,7 +169,7 @@ def pulsa(tecla):
 
         #Mover robot
 
-        bot.drive_direct(100*i, -100*i)
+        bot.drive_direct(100, -100)
         time.sleep(1)
         bot.drive_stop()
         datos= bot.get_sensors()
@@ -177,15 +180,16 @@ def pulsa(tecla):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(-100*i)
-        historico_izq.append(100*i)
+        historico_der.append(-100)
+        historico_izq.append(100)
 
         #Calculos de odometria
 
         Desplazamiento_der = Encoder_der_Act * conversion
         Desplazamiento_izq = Encoder_izq_Act * conversion
 
-        avance_promedio = (Desplazamiento_der - Desplazamiento_izq) / 2
+        avance_promedio = (Desplazamiento_der + Desplazamiento_izq) / 2
+
 
         giro = ((Desplazamiento_der - Desplazamiento_izq)/ EJE_RUEDAS)
 
@@ -213,7 +217,7 @@ def pulsa(tecla):
 
         #Mover robot
 
-        bot.drive_direct(-100*i, 100*i)
+        bot.drive_direct(-100, 100)
         time.sleep(1)
         bot.drive_stop()
         datos= bot.get_sensors()
@@ -224,15 +228,16 @@ def pulsa(tecla):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(100*i)
-        historico_izq.append(-100*i)
+        historico_der.append(100)
+        historico_izq.append(-100)
 
         #Calculos de odometria
 
         Desplazamiento_der = Encoder_der_Act * conversion
         Desplazamiento_izq = Encoder_izq_Act * conversion
 
-        avance_promedio = (Desplazamiento_der - Desplazamiento_izq) / 2
+        avance_promedio = (Desplazamiento_der + Desplazamiento_izq) / 2
+
 
         giro = ((Desplazamiento_der - Desplazamiento_izq)/ EJE_RUEDAS)
 
@@ -260,7 +265,7 @@ def pulsa(tecla):
 
         #Mover robot
 
-        bot.drive_direct(100*i, 50*i)
+        bot.drive_direct(100, 50)
         time.sleep(1)
         bot.drive_stop()
         datos= bot.get_sensors()
@@ -271,15 +276,16 @@ def pulsa(tecla):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(50*i)
-        historico_izq.append(100*i)
+        historico_der.append(50)
+        historico_izq.append(100)
 
         #Calculos de odometria
 
         Desplazamiento_der = Encoder_der_Act * conversion
         Desplazamiento_izq = Encoder_izq_Act * conversion
 
-        avance_promedio = (Desplazamiento_der - Desplazamiento_izq) / 2
+        avance_promedio = (Desplazamiento_der + Desplazamiento_izq) / 2
+
 
         giro = ((Desplazamiento_der - Desplazamiento_izq)/ EJE_RUEDAS)
 
@@ -307,7 +313,7 @@ def pulsa(tecla):
 
         #Mover robot
 
-        bot.drive_direct(50*i, 100*i)
+        bot.drive_direct(50, 100)
         time.sleep(1)
         bot.drive_stop()
         datos= bot.get_sensors()
@@ -318,15 +324,16 @@ def pulsa(tecla):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(100*i)
-        historico_izq.append(50*i)
+        historico_der.append(100)
+        historico_izq.append(50)
 
         #Calculos de odometria
 
         Desplazamiento_der = Encoder_der_Act * conversion
         Desplazamiento_izq = Encoder_izq_Act * conversion
 
-        avance_promedio = (Desplazamiento_der - Desplazamiento_izq) / 2
+        avance_promedio = (Desplazamiento_der + Desplazamiento_izq) / 2
+
 
         giro = ((Desplazamiento_der - Desplazamiento_izq)/ EJE_RUEDAS)
 
@@ -378,7 +385,7 @@ def movimiento_aleatorio(tecla):
         velocidad_izquierda = random.randint(-500, 500)
         velocidad_derecha = random.randint(-500, 500)
         bot.drive_direct(velocidad_izquierda, velocidad_derecha)
-        time.sleep(0.5)  # Pausa breve para permitir el movimiento
+        time.sleep(0.2)  # Pausa breve para permitir el movimiento
 
         # Recalcular posición de los encoders y guardar movimiento de encoder en los arrays - TODO
         
@@ -403,7 +410,9 @@ def busca_perimetro():
     choque_izq = False
     choque_frontal_der = False
     choque_frontal_izq = False
-
+    giro_anterior=0
+    pos_anterior_x=0
+    pos_anterior_y=0
     primera_pared = False
 
     historico_der = []
@@ -419,9 +428,9 @@ def busca_perimetro():
         Encoder_izq = datos.encoder_counts_left
         Encoder_der = datos.encoder_counts_right
         # Movimiento hacia adelante
-        bot.drive_direct(10, 10)
+        bot.drive_direct(100, 100)
         # Espera de medio segundo
-        bot.wait_time(0.1)
+        time.sleep(0.2)
 
         # Obtener los datos de los sensores
         datos= bot.get_sensors()
@@ -430,13 +439,14 @@ def busca_perimetro():
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(10)  
-        historico_izq.append(10)  
+        historico_der.append(100)  
+        historico_izq.append(100)  
 
         Desplazamiento_der = Encoder_der_Act * conversion
         Desplazamiento_izq = Encoder_izq_Act * conversion
 
-        avance_promedio = (Desplazamiento_der - Desplazamiento_izq) / 2
+        avance_promedio = (Desplazamiento_der + Desplazamiento_izq) / 2
+
 
         giro = ((Desplazamiento_der - Desplazamiento_izq)/ EJE_RUEDAS)
 
@@ -464,8 +474,8 @@ def busca_perimetro():
         choque_frontal = datos.wall
         choque_der = datos.cliff_right
         choque_izq = datos.cliff_left
-        choque_frontal_der = datos.cliff_front_left
-        choque_frontal_izq = datos.cliff_front_right
+        choque_frontal_der = datos.bumps_wheeldrops[1]
+        choque_frontal_izq = datos.bumps_wheeldrops[0]
 
         # Obtener los datos de los sensores
         luz_der = datos.light_bumper_right
@@ -480,8 +490,8 @@ def busca_perimetro():
             Encoder_der = datos.encoder_counts_right
 
             # Retrocede
-            bot.drive_direct(-10, -10)
-            bot.wait_time(0.1)
+            bot.drive_direct(-100, -100)
+            time.sleep(0.2)
 
             # Obtener los datos de los sensores
             datos= bot.get_sensors()
@@ -490,13 +500,14 @@ def busca_perimetro():
 
             Encoder_der_Act = Encoder_der_Act - Encoder_der
             Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-            historico_der.append(-10)  
-            historico_izq.append(-10)  
+            historico_der.append(-100)  
+            historico_izq.append(-100)  
 
             Desplazamiento_der = Encoder_der_Act * conversion
             Desplazamiento_izq = Encoder_izq_Act * conversion
 
-            avance_promedio = (Desplazamiento_der - Desplazamiento_izq) / 2
+            avance_promedio = (Desplazamiento_der + Desplazamiento_izq) / 2
+
 
             giro = ((Desplazamiento_der - Desplazamiento_izq)/ EJE_RUEDAS)
 
@@ -524,8 +535,8 @@ def busca_perimetro():
             Encoder_izq = datos.encoder_counts_left
             Encoder_der = datos.encoder_counts_right
             # Gira a la izquierda
-            bot.drive_direct(-10, 10)
-            bot.wait_time(0.1)
+            bot.drive_direct(100, -100)
+            time.sleep(0.2)
 
             # Obtener los datos de los sensores
             datos= bot.get_sensors()
@@ -534,13 +545,14 @@ def busca_perimetro():
 
             Encoder_der_Act = Encoder_der_Act - Encoder_der
             Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-            historico_der.append(10)  
-            historico_izq.append(-10)  
+            historico_der.append(-100)  
+            historico_izq.append(100)  
 
             Desplazamiento_der = Encoder_der_Act * conversion
             Desplazamiento_izq = Encoder_izq_Act * conversion
 
-            avance_promedio = (Desplazamiento_der - Desplazamiento_izq) / 2
+            avance_promedio = (Desplazamiento_der + Desplazamiento_izq) / 2
+
 
             giro = ((Desplazamiento_der - Desplazamiento_izq)/ EJE_RUEDAS)
 
@@ -570,16 +582,16 @@ def busca_perimetro():
 
                 primera_pared = True
         
-        elif (luz_der == 0 or luz_frontal_der == 0) and primera_pared: # Si se deja de detectar la pared a la derecha, seguir la pared, EL SENSOR DEVUELVE UN NUMERO MAYOR CUANTO MAS CERCA ESTA DE LA PARED
+        elif (luz_der >= 3000 or luz_frontal_der>= 3000) and primera_pared: # Si se deja de detectar la pared a la derecha, seguir la pared, EL SENSOR DEVUELVE UN NUMERO MAYOR CUANTO MAS CERCA ESTA DE LA PARED
             # DUDA -> NO SE SI SE DEBERIA DE MOVER ALANTE AQUI
             """
-            bot.drive_direct(10, 10)
+            bot.drive_direct(100, 100)
             bot.wait_time(0.1)
             """
 
             #Girar a la derecha 
-            bot.drive_direct(10,-10)
-            bot.wait_time(0.1)
+            bot.drive_direct(100,-100)
+            time.sleep(0.2)
             
 
 
@@ -590,7 +602,7 @@ def mostrar_texto(texto, x, y, tamano=20):
     rectangulo_texto.topleft = (x, y)
     screen.blit(superficie_texto, rectangulo_texto)
 # Crear una instancia de Create2 y establecer la conexión
-port = "COM6"  # Puerto serial donde está conectado el Roomba
+port = "COM7"  # Puerto serial donde está conectado el Roomba
 bot = Create2(port)
 bot.start()
 bot.safe()
