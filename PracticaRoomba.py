@@ -45,14 +45,13 @@ ROJO = (255, 0, 0)
 
 ##Mover Robot Calculando la odometria y posicion en ese momento del robot
 
-def pulsa(tecla):
+def pulsa(tecla, i):
     global pos_anterior_x
     global pos_anterior_y
     global giro_anterior
     historico_der = []
     historico_izq = []
     rastro = []
-    global i  
 
 
 
@@ -63,7 +62,7 @@ def pulsa(tecla):
 
         #Mover robot
 
-        bot.drive_direct(100, 100)
+        bot.drive_direct(100*i, 100*i)
         time.sleep(1)
         bot.drive_stop()
         datos= bot.get_sensors()
@@ -74,8 +73,8 @@ def pulsa(tecla):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(100)
-        historico_izq.append(100)
+        historico_der.append(100*i)
+        historico_izq.append(100*i)
 
         #Calculos de odometria
 
@@ -105,8 +104,6 @@ def pulsa(tecla):
             # Dibujar mapa
         dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro)
 
-        
-
         print('X: ' + str(pos_anterior_x))
         print('Y: ' + str(pos_anterior_y))
         print('giro: ' + str(giro_anterior))
@@ -119,7 +116,7 @@ def pulsa(tecla):
 
         #Mover robot
 
-        bot.drive_direct(-100, -100)
+        bot.drive_direct(-100*i, -100*i)
         time.sleep(1)
         bot.drive_stop()
         datos= bot.get_sensors()
@@ -130,8 +127,8 @@ def pulsa(tecla):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(-100)
-        historico_izq.append(-100)
+        historico_der.append(-100*i)
+        historico_izq.append(-100*i)
 
         #Calculos de odometria
 
@@ -169,7 +166,7 @@ def pulsa(tecla):
 
         #Mover robot
 
-        bot.drive_direct(100, -100)
+        bot.drive_direct(100*i, -100*i)
         time.sleep(1)
         bot.drive_stop()
         datos= bot.get_sensors()
@@ -180,8 +177,8 @@ def pulsa(tecla):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(-100)
-        historico_izq.append(100)
+        historico_der.append(-100*i)
+        historico_izq.append(100*i)
 
         #Calculos de odometria
 
@@ -217,7 +214,7 @@ def pulsa(tecla):
 
         #Mover robot
 
-        bot.drive_direct(-100, 100)
+        bot.drive_direct(-100*i, 100*i)
         time.sleep(1)
         bot.drive_stop()
         datos= bot.get_sensors()
@@ -228,8 +225,8 @@ def pulsa(tecla):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(100)
-        historico_izq.append(-100)
+        historico_der.append(100*i)
+        historico_izq.append(-100*i)
 
         #Calculos de odometria
 
@@ -265,7 +262,7 @@ def pulsa(tecla):
 
         #Mover robot
 
-        bot.drive_direct(100, 50)
+        bot.drive_direct(100*i, 50*i)
         time.sleep(1)
         bot.drive_stop()
         datos= bot.get_sensors()
@@ -276,8 +273,8 @@ def pulsa(tecla):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(50)
-        historico_izq.append(100)
+        historico_der.append(50*i)
+        historico_izq.append(100*i)
 
         #Calculos de odometria
 
@@ -313,7 +310,7 @@ def pulsa(tecla):
 
         #Mover robot
 
-        bot.drive_direct(50, 100)
+        bot.drive_direct(50*i, 100*i)
         time.sleep(1)
         bot.drive_stop()
         datos= bot.get_sensors()
@@ -324,8 +321,8 @@ def pulsa(tecla):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(100)
-        historico_izq.append(50)
+        historico_der.append(100*i)
+        historico_izq.append(50*i)
 
         #Calculos de odometria
 
@@ -376,7 +373,7 @@ def pulsa(tecla):
 
 
 
-def movimiento_aleatorio(tecla):
+def movimiento_aleatorio():
     start_time = time.time()  # Guarda el tiempo de inicio
     while time.time() - start_time < 5:  # Ejecuta el bucle mientras no se superen los 5 segundos
         # Calcular posición de los encoders - TODO
