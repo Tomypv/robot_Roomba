@@ -64,7 +64,8 @@ def pulsa(tecla):
         #Mover robot
 
         bot.drive_direct(100*i, 100*i)
-
+        time.sleep(1)
+        bot.drive_stop()
         datos= bot.get_sensors()
         Encoder_izq_Act = datos.encoder_counts_left
         Encoder_der_Act = datos.encoder_counts_right
@@ -102,8 +103,7 @@ def pulsa(tecla):
             # Dibujar mapa
         dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro)
 
-        time.sleep(1)
-        bot.drive_stop()
+        
 
         print('X: ' + str(pos_anterior_x))
         print('Y: ' + str(pos_anterior_y))
@@ -118,7 +118,8 @@ def pulsa(tecla):
         #Mover robot
 
         bot.drive_direct(-100*i, -100*i)
-
+        time.sleep(1)
+        bot.drive_stop()
         datos= bot.get_sensors()
         Encoder_izq_Act = datos.encoder_counts_left
         Encoder_der_Act = datos.encoder_counts_right
@@ -154,8 +155,6 @@ def pulsa(tecla):
         rastro.append((pos_anterior_x, pos_anterior_y))
             # Dibujar mapa
         dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro)
-        time.sleep(1)
-        bot.drive_stop()
         print('X: ' + str(pos_anterior_x))
         print('Y: ' + str(pos_anterior_y))
         print('giro: ' + str(giro_anterior))
@@ -168,7 +167,8 @@ def pulsa(tecla):
         #Mover robot
 
         bot.drive_direct(100*i, -100*i)
-
+        time.sleep(1)
+        bot.drive_stop()
         datos= bot.get_sensors()
         Encoder_izq_Act = datos.encoder_counts_left
         Encoder_der_Act = datos.encoder_counts_right
@@ -200,8 +200,6 @@ def pulsa(tecla):
             giro_anterior = 0
         giro_anterior = giro + giro_anterior
         rastro.append((pos_anterior_x, pos_anterior_y))
-        time.sleep(1)
-        bot.drive_stop()
             # Dibujar mapa
         dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro)
         print('X: ' + str(pos_anterior_x))
@@ -216,7 +214,8 @@ def pulsa(tecla):
         #Mover robot
 
         bot.drive_direct(-100*i, 100*i)
-
+        time.sleep(1)
+        bot.drive_stop()
         datos= bot.get_sensors()
         Encoder_izq_Act = datos.encoder_counts_left
         Encoder_der_Act = datos.encoder_counts_right
@@ -248,8 +247,6 @@ def pulsa(tecla):
             giro_anterior = 0
         giro_anterior = giro + giro_anterior 
         rastro.append((pos_anterior_x, pos_anterior_y))
-        time.sleep(1)
-        bot.drive_stop()
             # Dibujar mapa
         dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro)   
         print('X: ' + str(pos_anterior_x))
@@ -264,7 +261,8 @@ def pulsa(tecla):
         #Mover robot
 
         bot.drive_direct(100*i, 50*i)
-
+        time.sleep(1)
+        bot.drive_stop()
         datos= bot.get_sensors()
         Encoder_izq_Act = datos.encoder_counts_left
         Encoder_der_Act = datos.encoder_counts_right
@@ -296,9 +294,6 @@ def pulsa(tecla):
             giro_anterior = 0
         giro_anterior = giro + giro_anterior
         rastro.append((pos_anterior_x, pos_anterior_y))
-
-        time.sleep(1)
-        bot.drive_stop()
             # Dibujar mapa
         dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro) 
         print('X: ' + str(pos_anterior_x))
@@ -313,7 +308,8 @@ def pulsa(tecla):
         #Mover robot
 
         bot.drive_direct(50*i, 100*i)
-
+        time.sleep(1)
+        bot.drive_stop()
         datos= bot.get_sensors()
         Encoder_izq_Act = datos.encoder_counts_left
         Encoder_der_Act = datos.encoder_counts_right
@@ -341,9 +337,6 @@ def pulsa(tecla):
 
         giro_anterior = giro + giro_anterior
         rastro.append((pos_anterior_x, pos_anterior_y))
-
-        time.sleep(1)
-        bot.drive_stop()
             # Dibujar mapa
         dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro) 
         print('X: ' + str(pos_anterior_x))
@@ -358,7 +351,7 @@ def pulsa(tecla):
 
     
     elif (tecla == kb.KeyCode.from_char('p')):
-        print('salir tontin: ' + str(tecla))
+        print('salir: ' + str(tecla))
         exit()
     elif (tecla == kb.KeyCode.from_char('r')):
         movimiento_aleatorio(tecla)
@@ -368,7 +361,7 @@ def pulsa(tecla):
         busca_perimetro()
 
     else:
-        print('Tecla invalida like your mom')
+        print('Tecla invalida ')
     
     # Limpiar pantalla
 
@@ -604,7 +597,7 @@ bot.safe()
 
 # Bucle para detectar las teclas presionadas y controlar el Roomba
 conversion = calularConversion()
-print('Conversion anal: ' + str(conversion))
+print('Conversion: ' + str(conversion))
 with kb.Listener(pulsa) as escuchador:
     escuchador.join()    # Esperar hasta que se presione la tecla 'Esc' para detener el programa
 
