@@ -7,14 +7,17 @@ import pygame
 import time
 #Especificaciones del Robot
 
-ANCHO = 5
-LARGO = 5
+ANCHO = 50
+LARGO = 50
 EJE_RUEDAS = 23.5 #Es en milimetros
 DIAM_RUEDAS = 7.2 #Es en milimetros
 RESOL_ENCODER = 508.8
 RELA_REDUCCION = 1
 pos_anterior_x = 0
 pos_anterior_y = 0
+historico_der = []
+historico_izq = []
+rastro = []
 giro_anterior = 0
 i = 1.0  # Inicializar i a 1.0 (velocidad normal)
 pygame.init()
@@ -49,9 +52,7 @@ def pulsa(tecla):
     global pos_anterior_x
     global pos_anterior_y
     global giro_anterior
-    historico_der = []
-    historico_izq = []
-    rastro = []
+
     global i  
 
 
@@ -92,12 +93,12 @@ def pulsa(tecla):
         inc_y = avance_promedio * math.sin(giro_anterior+giro)
         pos_anterior_x = inc_x + pos_anterior_x
         pos_anterior_y = inc_y + pos_anterior_y
-
-        if giro_anterior > 2*math.pi:
-            giro_anterior = 0
-        if giro_anterior <= (-2*math.pi):
-            giro_anterior = 0
         giro_anterior += giro
+        if giro_anterior > 2*math.pi:
+            giro_anterior = giro_anterior - 360
+        if giro_anterior <= (-2*math.pi):
+            giro_anterior = giro_anterior + 360
+        
 
             # Actualizar rastro
         rastro.append((pos_anterior_x, pos_anterior_y))
@@ -147,13 +148,13 @@ def pulsa(tecla):
         inc_y = avance_promedio * math.sin(giro_anterior+giro)
         pos_anterior_x = inc_x + pos_anterior_x
         pos_anterior_y = inc_y + pos_anterior_y
-
-        if giro_anterior > 2*math.pi:
-            giro_anterior = 0
-        if giro_anterior <= (-2*math.pi):
-            giro_anterior = 0
-        
         giro_anterior += giro
+        if giro_anterior > 2*math.pi:
+            giro_anterior = giro_anterior - 360
+        if giro_anterior <= (-2*math.pi):
+            giro_anterior = giro_anterior + 360
+        
+
             # Actualizar rastro
         rastro.append((pos_anterior_x, pos_anterior_y))
             # Dibujar mapa
@@ -197,12 +198,12 @@ def pulsa(tecla):
         inc_y = avance_promedio * math.sin(giro_anterior+giro)
         pos_anterior_x = inc_x + pos_anterior_x
         pos_anterior_y = inc_y + pos_anterior_y
-
-        if giro_anterior > 2*math.pi:
-            giro_anterior = 0
-        if giro_anterior <= (-2*math.pi):
-            giro_anterior = 0
         giro_anterior = giro + giro_anterior
+        if giro_anterior > 2*math.pi:
+            giro_anterior = giro_anterior - 2*math.pi
+        if giro_anterior <= (-2*math.pi):
+            giro_anterior = giro_anterior + 2*math.pi
+        
         rastro.append((pos_anterior_x, pos_anterior_y))
             # Dibujar mapa
         dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro)
@@ -245,12 +246,12 @@ def pulsa(tecla):
         inc_y = avance_promedio * math.sin(giro_anterior+giro)
         pos_anterior_x = inc_x + pos_anterior_x
         pos_anterior_y = inc_y + pos_anterior_y
-
-        if giro_anterior > 2*math.pi:
-            giro_anterior = 0
-        if giro_anterior <= (-2*math.pi):
-            giro_anterior = 0
         giro_anterior = giro + giro_anterior 
+        if giro_anterior > 2*math.pi:
+            giro_anterior = giro_anterior - 2*math.pi
+        if giro_anterior <= (-2*math.pi):
+            giro_anterior = giro_anterior + 2*math.pi
+
         rastro.append((pos_anterior_x, pos_anterior_y))
             # Dibujar mapa
         dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro)   
@@ -295,10 +296,10 @@ def pulsa(tecla):
         pos_anterior_y = inc_y + pos_anterior_y
 
         if giro_anterior > 2*math.pi:
-            giro_anterior = 0
+            giro_anterior = giro_anterior - 360
         if giro_anterior <= (-2*math.pi):
-            giro_anterior = 0
-        giro_anterior = giro + giro_anterior
+            giro_anterior = giro_anterior + 360
+
         rastro.append((pos_anterior_x, pos_anterior_y))
             # Dibujar mapa
         dibujar_mapa(pos_anterior_x, pos_anterior_y, rastro) 
@@ -366,7 +367,8 @@ def pulsa(tecla):
 
     elif (tecla == kb.KeyCode.from_char('f')):
         busca_perimetro()
-
+    elif (tecla == kb.KeyCode.from_char('h')):
+        vuelta_a_casa(historico_izq,historico_der)
     else:
         print('Tecla invalida ')
     
@@ -392,14 +394,17 @@ def movimiento_aleatorio(tecla):
         # Cálculos de odometría - TODO
 
 def vuelta_a_casa(historico_izq, historico_der):
-
+    print('VUELTA A CASA')
     if len(historico_izq) != len(historico_der):
-        raise ValueError("Los arrays deben tener la misma longitud")
+        print('Los arrays deben tener la misma longitud')
 
     longitud = len(historico_izq)
-    for i in range(longitud - 1, -1, -1):
+    print('Longitud' + str(longitud))
+    for i in range(longitud):
+        print('Iteracion' + str(i))
         bot.drive_direct(-historico_izq[i], -historico_der[i])
         time.sleep(1)
+    bot.stop()
 
 
 
@@ -456,9 +461,9 @@ def busca_perimetro():
         pos_anterior_y = inc_y + pos_anterior_y
 
         if giro_anterior > 2*math.pi:
-            giro_anterior = 0
+            giro_anterior = giro_anterior - 360
         if giro_anterior <= (-2*math.pi):
-            giro_anterior = 0
+            giro_anterior = giro_anterior + 360
         giro_anterior = giro + giro_anterior
         rastro.append((pos_anterior_x, pos_anterior_y))
        
