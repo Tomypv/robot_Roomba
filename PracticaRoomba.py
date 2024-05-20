@@ -18,8 +18,7 @@ pos_anterior_y = 0
 historico_der = []
 historico_izq = []
 rastro = []
-giro_anterior = 0
-i = 1.0  # Inicializar i a 1.0 (velocidad normal)
+giro_anterior = 0  
 pygame.init()
 # Definir dimensiones de la ventana
 WIDTH, HEIGHT = 800, 600
@@ -48,7 +47,7 @@ ROJO = (255, 0, 0)
 
 ##Mover Robot Calculando la odometria y posicion en ese momento del robot
 
-def pulsa(tecla, i):
+def pulsa(tecla):
     global pos_anterior_x
     global pos_anterior_y
     global giro_anterior
@@ -62,7 +61,7 @@ def pulsa(tecla, i):
 
         #Mover robot
 
-        bot.drive_direct(100*i, 100*i)
+        bot.drive_direct(100, 100)
         time.sleep(1)
         bot.drive_stop()
         datos= bot.get_sensors()
@@ -73,8 +72,8 @@ def pulsa(tecla, i):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(100*i)
-        historico_izq.append(100*i)
+        historico_der.append(100)
+        historico_izq.append(100)
 
         #Calculos de odometria
 
@@ -116,7 +115,7 @@ def pulsa(tecla, i):
 
         #Mover robot
 
-        bot.drive_direct(-100*i, -100*i)
+        bot.drive_direct(-100, -100)
         time.sleep(1)
         bot.drive_stop()
         datos= bot.get_sensors()
@@ -127,8 +126,8 @@ def pulsa(tecla, i):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(-100*i)
-        historico_izq.append(-100*i)
+        historico_der.append(-100)
+        historico_izq.append(-100)
 
         #Calculos de odometria
 
@@ -166,7 +165,7 @@ def pulsa(tecla, i):
 
         #Mover robot
 
-        bot.drive_direct(100*i, -100*i)
+        bot.drive_direct(100, -100)
         time.sleep(1)
         bot.drive_stop()
         datos= bot.get_sensors()
@@ -177,8 +176,8 @@ def pulsa(tecla, i):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(-100*i)
-        historico_izq.append(100*i)
+        historico_der.append(-100)
+        historico_izq.append(100)
 
         #Calculos de odometria
 
@@ -214,7 +213,7 @@ def pulsa(tecla, i):
 
         #Mover robot
 
-        bot.drive_direct(-100*i, 100*i)
+        bot.drive_direct(-100, 100)
         time.sleep(1)
         bot.drive_stop()
         datos= bot.get_sensors()
@@ -225,8 +224,8 @@ def pulsa(tecla, i):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(100*i)
-        historico_izq.append(-100*i)
+        historico_der.append(100)
+        historico_izq.append(-100)
 
         #Calculos de odometria
 
@@ -262,7 +261,7 @@ def pulsa(tecla, i):
 
         #Mover robot
 
-        bot.drive_direct(100*i, 50*i)
+        bot.drive_direct(100, 50)
         time.sleep(1)
         bot.drive_stop()
         datos= bot.get_sensors()
@@ -273,8 +272,8 @@ def pulsa(tecla, i):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(50*i)
-        historico_izq.append(100*i)
+        historico_der.append(50)
+        historico_izq.append(100)
 
         #Calculos de odometria
 
@@ -310,7 +309,7 @@ def pulsa(tecla, i):
 
         #Mover robot
 
-        bot.drive_direct(50*i, 100*i)
+        bot.drive_direct(50, 100)
         time.sleep(1)
         bot.drive_stop()
         datos= bot.get_sensors()
@@ -321,8 +320,8 @@ def pulsa(tecla, i):
 
         Encoder_der_Act = Encoder_der_Act - Encoder_der
         Encoder_izq_Act = Encoder_izq_Act - Encoder_izq
-        historico_der.append(100*i)
-        historico_izq.append(50*i)
+        historico_der.append(100)
+        historico_izq.append(50)
 
         #Calculos de odometria
 
@@ -358,7 +357,7 @@ def pulsa(tecla, i):
         print('salir: ' + str(tecla))
         exit()
     elif (tecla == kb.KeyCode.from_char('r')):
-        movimiento_aleatorio(tecla)
+        movimiento_aleatorio()
         exit()
 
     elif (tecla == kb.KeyCode.from_char('f')):
